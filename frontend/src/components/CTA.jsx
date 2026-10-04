@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -269,8 +270,8 @@ export default function CTA() {
 
               {/* PRIMARY */}
 
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="
                   group
                   inline-flex
@@ -315,8 +316,8 @@ export default function CTA() {
 
               {/* SECONDARY */}
 
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="
                   group
                   inline-flex

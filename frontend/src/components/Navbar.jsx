@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { Link } from "react-router-dom";
 
 const navItems = [
   {
@@ -484,8 +485,8 @@ const Navbar = () => {
               LET'S TALK
           =========================================== */}
 
-          <a
-            href="/contact"
+          <Link
+            to="/contact"
             className="
               hidden
               h-[48px]

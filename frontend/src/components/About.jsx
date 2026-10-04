@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -121,7 +122,7 @@ export default function About() {
                 of your financial journey.
               </p>
 
-              <a
+              <Link
                 href="/our-story"
                 className="group mt-10 inline-flex items-center gap-3 rounded-full bg-[#123B2A] px-6 py-3.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-[#0D3022]"
               >
