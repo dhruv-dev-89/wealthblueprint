@@ -247,14 +247,14 @@ const Footer = () => {
             {/* Legal */}
             <div className="flex items-center gap-5">
               <a
-                href="/privacy-policy.html"
+                href="/privacy-policy"
                 className="text-[12px] text-white/35 transition-colors duration-300 hover:text-white"
               >
                 Privacy
               </a>
 
               <a
-                href="/terms.html"
+                href="/terms"
                 className="text-[12px] text-white/35 transition-colors duration-300 hover:text-white"
               >
                 Terms

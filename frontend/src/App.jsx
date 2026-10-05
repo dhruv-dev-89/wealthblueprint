@@ -15,6 +15,8 @@ import FAQs from "./pages/FAQs";
 import OurStory from "./pages/OurStory";
 import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
 function App() {
   return (
     <BrowserRouter>
@@ -47,6 +49,10 @@ function App() {
         <Route path="/careers" element={<Careers />} />
 
         <Route path="/contact" element={<Contact />} />
+
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+        <Route path="/terms" element={<Terms />} />
 
       </Routes>
     </BrowserRouter>

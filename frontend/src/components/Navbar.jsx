@@ -512,7 +512,7 @@ const Navbar = () => {
             <span className="text-[14px]">
               ↗
             </span>
-          </a>
+          </Link>
 
           {/* ==========================================
               MOBILE MENU BUTTON

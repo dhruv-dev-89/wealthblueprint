@@ -312,7 +312,7 @@ export default function CTA() {
                 >
                   ↗
                 </span>
-              </a>
+              </Link>
 
               {/* SECONDARY */}
 
@@ -344,7 +344,7 @@ export default function CTA() {
                 >
                   →
                 </span>
-              </a>
+              </Link>
 
             </div>
           </div>

@@ -583,7 +583,7 @@ export default function Insurance() {
                 </div>
 
                 <a
-                  href="/advisor.html"
+                  href="/contact"
                   className="mt-7 inline-flex h-[50px] items-center gap-3 rounded-full border border-[#123B2A] px-6 text-[13px] font-semibold text-[#123B2A] transition hover:bg-[#EAF7EF]"
                 >
                   Speak to an Advisor
@@ -692,7 +692,7 @@ export default function Insurance() {
 
             <div className="mt-9">
               <a
-                href="/advisor.html"
+                href="/contact"
                 className="inline-flex h-[54px] items-center gap-3 rounded-full bg-white px-8 text-[13px] font-semibold text-[#123B2A] transition-all duration-300 hover:-translate-y-1 hover:bg-[#EAF7EF]"
               >
                 Speak to an Advisor
