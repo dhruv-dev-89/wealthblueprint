@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 
 const services = [
@@ -6,41 +7,55 @@ const services = [
     title: "Investment Planning",
     eyebrow: "01",
     text: "Build an investment strategy around your goals, time horizon and comfort with risk.",
-    image: "https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aW52ZXN0bWVudHxlbnwwfHwwfHx8MA%3D%3D",
+    image:
+      "https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aW52ZXN0bWVudHxlbnwwfHwwfHx8MA%3D%3D",
+    href: "/investment-plans",
   },
   {
     title: "Mutual Funds",
     eyebrow: "02",
     text: "Explore diversified investment options designed around your financial objectives.",
-    image: "https://images.unsplash.com/photo-1506555191898-a76bacf004ca?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image:
+      "https://images.unsplash.com/photo-1506555191898-a76bacf004ca?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    href: "/mutual-funds",
   },
   {
     title: "SIP",
     eyebrow: "03",
     text: "A systematic way to invest regularly while building towards long-term financial goals.",
-    image: "https://plus.unsplash.com/premium_photo-1742119207785-8948a2817848?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3lzdGVtYXRpYyUyMGludmVzdG1lbnQlMjBwbGFufGVufDB8fDB8fHww",
+    image:
+      "https://plus.unsplash.com/premium_photo-1742119207785-8948a2817848?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3lzdGVtYXRpYyUyMGludmVzdG1lbnQlMjBwbGFufGVufDB8fDB8fHww",
+    href: "/sip",
   },
   {
     title: "Insurance",
     eyebrow: "04",
     text: "Protect the financial progress you are building with coverage aligned to your needs.",
-    image: "https://images.unsplash.com/photo-1742318592061-15c5f19e1e47?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGZpbmFuY2lhbCUyMGluc3VyYW5jZXxlbnwwfHwwfHx8MA%3D%3D",
+    image:
+      "https://images.unsplash.com/photo-1742318592061-15c5f19e1e47?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGZpbmFuY2lhbCUyMGluc3VyYW5jZXxlbnwwfHwwfHx8MA%3D%3D",
+    href: "/insurance",
   },
   {
     title: "Tax Planning",
     eyebrow: "05",
     text: "Structure your finances with tax-efficient decisions that support your wider financial plan.",
-    image: "https://plus.unsplash.com/premium_photo-1679923906285-386991e8d862?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dGF4fGVufDB8fDB8fHww",
+    image:
+      "https://plus.unsplash.com/premium_photo-1679923906285-386991e8d862?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dGF4fGVufDB8fDB8fHww",
+    href: "/tax-planning",
   },
   {
     title: "Financial Planning",
     eyebrow: "06",
     text: "Bring your goals, investments, protection and future priorities together into one clear plan.",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZpbmFuY2lhbCUyMHBsYW5uaW5nfGVufDB8fDB8fHww",
+    image:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxA3MjA3fDB8MHxzZWFyY2h8MTB8fGZpbmFuY2lhbCUyMHBsYW5uaW5nfGVufDB8fDB8fHww",
+    href: "/financial-planning",
   },
 ];
 
 export default function Services() {
+  const navigate = useNavigate();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
 
@@ -72,7 +87,10 @@ export default function Services() {
    * ---------------------------------------------------------
    */
 
-  const getRelativePosition = (index, currentIndex = activeIndex) => {
+  const getRelativePosition = (
+    index,
+    currentIndex = activeIndex
+  ) => {
     let difference = index - currentIndex;
 
     if (difference > total / 2) {
@@ -92,28 +110,43 @@ export default function Services() {
    * ---------------------------------------------------------
    */
 
-  const updateCards = (instant = false, currentIndex = activeIndex) => {
+  const updateCards = (
+    instant = false,
+    currentIndex = activeIndex
+  ) => {
     cardsRef.current.forEach((card, index) => {
       if (!card) return;
 
-      const position = getRelativePosition(index, currentIndex);
+      const position = getRelativePosition(
+        index,
+        currentIndex
+      );
+
       const distance = Math.abs(position);
 
       /*
-       * Cards which are too far away.
+       * Cards which are too far away
        */
+
       if (distance > visibleCards) {
         gsap.to(card, {
           duration: instant ? 0 : duration / 1000,
+
           x: position > 0 ? 500 : -500,
           y: 30,
           z: -300,
+
           scale: 0.7,
           opacity: 0,
+
           rotateY: position > 0 ? -35 : 35,
+
           filter: "blur(8px)",
+
           zIndex: 0,
+
           ease: "power3.out",
+
           overwrite: true,
         });
 
@@ -123,6 +156,7 @@ export default function Services() {
       /*
        * CENTER CARD
        */
+
       if (position === 0) {
         gsap.to(card, {
           duration: instant ? 0 : duration / 1000,
@@ -151,6 +185,7 @@ export default function Services() {
       /*
        * SIDE CARDS
        */
+
       const direction = position > 0 ? 1 : -1;
 
       const distanceRatio = Math.min(
@@ -220,7 +255,10 @@ export default function Services() {
 
     return () => {
       cancelAnimationFrame(frame);
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
     };
   }, []);
 
@@ -275,17 +313,17 @@ export default function Services() {
    */
 
   useEffect(() => {
-  if (hovered) return;
+    if (hovered) return;
 
-  autoplayRef.current = setInterval(() => {
-    setActiveIndex((current) => {
-      return normalizeIndex(current + 1);
-    });
-  }, 2000);
+    autoplayRef.current = setInterval(() => {
+      setActiveIndex((current) => {
+        return normalizeIndex(current + 1);
+      });
+    }, 2000);
 
-  return () => {
-    clearInterval(autoplayRef.current);
-  };
+    return () => {
+      clearInterval(autoplayRef.current);
+    };
   }, [hovered]);
 
   /*
@@ -295,9 +333,6 @@ export default function Services() {
    */
 
   const handlePointerDown = (e) => {
-    /*
-     * Don't start dragging when clicking buttons.
-     */
     if (e.target.closest("button")) {
       return;
     }
@@ -305,10 +340,6 @@ export default function Services() {
     dragStart.current = e.clientX;
     isDragging.current = true;
     didDrag.current = false;
-
-    containerRef.current?.setPointerCapture?.(
-      e.pointerId
-    );
   };
 
   /*
@@ -339,10 +370,6 @@ export default function Services() {
 
     isDragging.current = false;
 
-    containerRef.current?.releasePointerCapture?.(
-      e.pointerId
-    );
-
     const distance =
       e.clientX - dragStart.current;
 
@@ -352,9 +379,20 @@ export default function Services() {
       next();
     }
 
-    /*
-     * Reset after the click event has passed.
-     */
+    setTimeout(() => {
+      didDrag.current = false;
+    }, 50);
+  };
+
+  /*
+   * ---------------------------------------------------------
+   * POINTER CANCEL
+   * ---------------------------------------------------------
+   */
+
+  const handlePointerCancel = () => {
+    isDragging.current = false;
+
     setTimeout(() => {
       didDrag.current = false;
     }, 50);
@@ -392,6 +430,27 @@ export default function Services() {
 
   /*
    * ---------------------------------------------------------
+   * CARD CLICK
+   * ---------------------------------------------------------
+   */
+
+  const handleCardClick = (e, service) => {
+    e.stopPropagation();
+
+    if (didDrag.current) {
+      return;
+    }
+
+    /*
+     * Direct navigation.
+     * Every card uses its own href.
+     */
+
+    navigate(service.href);
+  };
+
+  /*
+   * ---------------------------------------------------------
    * RENDER
    * ---------------------------------------------------------
    */
@@ -422,7 +481,15 @@ export default function Services() {
         >
           <div>
             <div className="mb-4 flex items-center gap-2">
-              <span className="h-[6px] w-[6px] rounded-full bg-[#43A85B]" />
+
+              <span
+                className="
+                  h-[6px]
+                  w-[6px]
+                  rounded-full
+                  bg-[#43A85B]
+                "
+              />
 
               <span
                 className="
@@ -435,6 +502,7 @@ export default function Services() {
               >
                 WHAT WE OFFER
               </span>
+
             </div>
 
             <h2
@@ -448,39 +516,52 @@ export default function Services() {
             >
               Everything your
               <br />
+
               <span className="text-[#3157C8]">
                 wealth needs.
               </span>
             </h2>
           </div>
-
-          
         </div>
 
         {/* DEPTH CAROUSEL */}
 
         <div
-        ref={containerRef}
-        className="
-          relative
-          h-[540px]
-          w-full
-          overflow-hidden
-          select-none
-        "
-        style={{
-          perspective: "1400px",
-          perspectiveOrigin: "50% 50%",
-          touchAction: "pan-y",
-        }}
-        
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-      >
+          ref={containerRef}
+          className="
+            relative
+            h-[540px]
+            w-full
+            overflow-hidden
+            select-none
+          "
+          style={{
+            perspective: "1400px",
+            perspectiveOrigin: "50% 50%",
+            touchAction: "pan-y",
+          }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
+        >
+
           {services.map((service, index) => {
             const position =
               getRelativePosition(index);
+
+            const distance = Math.abs(position);
+
+            /*
+             * Higher cards are visually in front.
+             * Only cards currently participating in the
+             * carousel receive pointer events.
+             */
+
+            const cardZIndex =
+              position === 0
+                ? 100
+                : 100 - Math.round(distance * 10);
 
             return (
               <div
@@ -488,18 +569,15 @@ export default function Services() {
                 ref={(el) => {
                   cardsRef.current[index] = el;
                 }}
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-                onClick={() => {
-                  /*
-                   * Don't trigger card click after dragging.
-                   */
-                  if (didDrag.current) return;
-
-                  if (position !== 0) {
-                    goTo(index);
-                  }
-                }}
+                onMouseEnter={() =>
+                  setHovered(true)
+                }
+                onMouseLeave={() =>
+                  setHovered(false)
+                }
+                onClick={(e) =>
+                  handleCardClick(e, service)
+                }
                 className="
                   absolute
                   left-1/2
@@ -516,8 +594,24 @@ export default function Services() {
                   borderRadius: "18px",
                   transformStyle: "preserve-3d",
                   background: "#05060a",
+
+                  /*
+                   * Prevent completely hidden cards from
+                   * catching clicks.
+                   */
+                  pointerEvents:
+                    distance > visibleCards
+                      ? "none"
+                      : "auto",
+
+                  /*
+                   * Keep the visually front card
+                   * above the cards behind it.
+                   */
+                  zIndex: cardZIndex,
                 }}
               >
+
                 {/* IMAGE */}
 
                 <img
@@ -525,6 +619,7 @@ export default function Services() {
                   alt={service.title}
                   draggable={false}
                   className="
+                    pointer-events-none
                     absolute
                     inset-0
                     h-full
@@ -537,6 +632,7 @@ export default function Services() {
 
                 <div
                   className="
+                    pointer-events-none
                     absolute
                     inset-0
                     bg-gradient-to-t
@@ -550,6 +646,7 @@ export default function Services() {
 
                 <div
                   className="
+                    pointer-events-none
                     absolute
                     left-5
                     right-5
@@ -595,6 +692,7 @@ export default function Services() {
 
                 <div
                   className="
+                    pointer-events-none
                     absolute
                     bottom-0
                     left-0
@@ -641,6 +739,7 @@ export default function Services() {
                     "
                   />
                 )}
+
               </div>
             );
           })}
@@ -659,6 +758,7 @@ export default function Services() {
               gap-2
             "
           >
+
             <button
               type="button"
               onPointerDown={(e) => {
@@ -720,6 +820,7 @@ export default function Services() {
             >
               →
             </button>
+
           </div>
 
           {/* INDICATORS */}
@@ -767,6 +868,7 @@ export default function Services() {
               />
             ))}
           </div>
+
         </div>
       </div>
     </section>

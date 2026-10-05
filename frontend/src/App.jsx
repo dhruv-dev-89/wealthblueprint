@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import InvestmentPlanning from "./pages/InvestmentPlanning";
 import MutualFunds from "./pages/MutualFunds";
@@ -24,10 +24,28 @@ import RenewPolicy from "./pages/RenewPolicy";
 import CheckStatus from "./pages/CheckStatus";
 import FileClaim from "./pages/FileClaim";
 import TrackClaim from "./pages/TrackClaim";
+import { useEffect } from "react";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
     <BrowserRouter>
+
+      <ScrollToTop />
+
       <Routes>
         <Route path="/" element={<HomePage />} />
 
