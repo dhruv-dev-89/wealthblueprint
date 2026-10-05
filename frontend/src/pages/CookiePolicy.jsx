@@ -4,22 +4,22 @@ import gsap from "gsap";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-export default function PrivacyPolicy() {
+export default function CookiePolicy() {
   const sectionIds = [
-    "information",
-    "usage",
-    "sharing",
-    "security",
-    "cookies",
-    "rights",
+    "what",
+    "use",
+    "types",
+    "third-party",
+    "control",
+    "changes",
     "contact",
   ];
 
-  const [activeSection, setActiveSection] = useState("information");
+  const [activeSection, setActiveSection] = useState("what");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".privacy-hero-item", {
+      gsap.from(".cookie-hero-item", {
         y: 30,
         opacity: 0,
         duration: 0.8,
@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
         ease: "power3.out",
       });
 
-      gsap.from(".privacy-section", {
+      gsap.from(".cookie-section", {
         y: 25,
         opacity: 0,
         duration: 0.7,
@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
         delay: 0.15,
         ease: "power3.out",
         scrollTrigger: {
-          trigger: ".privacy-content",
+          trigger: ".cookie-content",
           start: "top 82%",
         },
       });
@@ -94,12 +94,12 @@ export default function PrivacyPolicy() {
   };
 
   const navigation = [
-    ["information", "Information We Collect"],
-    ["usage", "How We Use Information"],
-    ["sharing", "Information Sharing"],
-    ["security", "Data Security"],
-    ["cookies", "Cookies"],
-    ["rights", "Your Rights"],
+    ["what", "What Are Cookies?"],
+    ["use", "How We Use Cookies"],
+    ["types", "Types of Cookies"],
+    ["third-party", "Third-Party Services"],
+    ["control", "Managing Cookies"],
+    ["changes", "Policy Changes"],
     ["contact", "Contact Us"],
   ];
 
@@ -112,22 +112,22 @@ export default function PrivacyPolicy() {
         <div className="mx-auto max-w-[1280px]">
           <div className="grid items-end gap-12 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
-              <p className="privacy-hero-item mb-8 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#3157C8]">
+              <p className="cookie-hero-item mb-8 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#3157C8]">
                 LEGAL
               </p>
 
-              <h1 className="privacy-hero-item max-w-[900px] text-[clamp(4rem,8vw,8.5rem)] font-medium leading-[0.84] tracking-[-0.09em]">
-                Privacy
+              <h1 className="cookie-hero-item max-w-[900px] text-[clamp(4rem,8vw,8.5rem)] font-medium leading-[0.84] tracking-[-0.09em]">
+                Cookie
                 <br />
                 <span className="text-[#3157C8]">Policy.</span>
               </h1>
             </div>
 
-            <div className="privacy-hero-item border-t border-[#11110F]/10 pt-7">
+            <div className="cookie-hero-item border-t border-[#11110F]/10 pt-7">
               <p className="max-w-[430px] text-[15px] leading-7 text-[#11110F]/55">
-                Your privacy matters to us. This policy explains how
-                Wealth Blue Print collects, uses, and protects information
-                when you use our website and services.
+                This policy explains how Wealth Blue Print may use
+                cookies and similar technologies to improve your
+                experience on our website.
               </p>
 
               <p className="mt-6 text-[9px] font-semibold uppercase tracking-[0.22em] text-[#11110F]/30">
@@ -139,7 +139,7 @@ export default function PrivacyPolicy() {
       </section>
 
       {/* CONTENT */}
-      <section className="privacy-content px-6 pb-24 sm:px-10 lg:px-16 lg:pb-32">
+      <section className="cookie-content px-6 pb-24 sm:px-10 lg:px-16 lg:pb-32">
         <div className="mx-auto grid max-w-[1280px] gap-16 lg:grid-cols-[0.3fr_0.7fr] lg:gap-24">
 
           {/* SIDEBAR */}
@@ -182,183 +182,177 @@ export default function PrivacyPolicy() {
           <main className="max-w-[820px] space-y-14">
 
             <section
-              id="information"
-              className="privacy-section scroll-mt-32"
+              id="what"
+              className="cookie-section scroll-mt-32"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                INFORMATION WE COLLECT
+                WHAT ARE COOKIES?
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                Information you choose to share.
+                Small files that help websites work better.
+              </h2>
+
+              <p className="mt-7 text-[14px] leading-7 text-[#11110F]/60">
+                Cookies are small text files that may be stored on your
+                device when you visit a website. They can help websites
+                remember certain information and understand how visitors
+                interact with their pages.
+              </p>
+            </section>
+
+            <section
+              id="use"
+              className="cookie-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
+              <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
+                HOW WE USE COOKIES
+              </p>
+
+              <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
+                Used to improve your experience.
               </h2>
 
               <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
                 <p>
-                  When you contact us, request information, book a
-                  consultation, or use our services, we may collect
-                  information that you voluntarily provide.
+                  Cookies may be used to help the website function
+                  correctly, remember preferences, understand website
+                  traffic, and improve the overall user experience.
                 </p>
 
                 <p>
-                  This may include your name, email address, phone number,
-                  location, financial preferences, and other information
-                  necessary to respond to your enquiry or provide a
-                  requested service.
-                </p>
-
-                <p>
-                  We may also collect limited technical information such
-                  as browser type, device information, IP address, and
-                  website usage information.
+                  We may also use information generated through cookies
+                  to identify technical issues and improve website
+                  performance.
                 </p>
               </div>
             </section>
 
             <section
-              id="usage"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+              id="types"
+              className="cookie-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                HOW WE USE INFORMATION
+                TYPES OF COOKIES
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                Information should have a purpose.
+                Different cookies serve different purposes.
+              </h2>
+
+              <div className="mt-8 space-y-4">
+                <div className="rounded-[22px] bg-[#EAF7EF] p-6">
+                  <h3 className="text-[17px] font-semibold text-[#123B2A]">
+                    Essential Cookies
+                  </h3>
+
+                  <p className="mt-3 text-[14px] leading-7 text-[#11110F]/55">
+                    These may be required for basic website functionality,
+                    security, navigation, and other essential features.
+                  </p>
+                </div>
+
+                <div className="rounded-[22px] bg-[#EFECE4] p-6">
+                  <h3 className="text-[17px] font-semibold text-[#123B2A]">
+                    Preference Cookies
+                  </h3>
+
+                  <p className="mt-3 text-[14px] leading-7 text-[#11110F]/55">
+                    These can help remember choices or preferences so
+                    that the website experience can be more convenient.
+                  </p>
+                </div>
+
+                <div className="rounded-[22px] bg-[#EAF7EF] p-6">
+                  <h3 className="text-[17px] font-semibold text-[#123B2A]">
+                    Analytics Cookies
+                  </h3>
+
+                  <p className="mt-3 text-[14px] leading-7 text-[#11110F]/55">
+                    These may help us understand how visitors use the
+                    website and identify areas where the experience can
+                    be improved.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section
+              id="third-party"
+              className="cookie-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
+              <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
+                THIRD-PARTY SERVICES
+              </p>
+
+              <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
+                Some services may set their own cookies.
+              </h2>
+
+              <p className="mt-7 text-[14px] leading-7 text-[#11110F]/60">
+                Certain third-party services or technologies integrated
+                into a website may use their own cookies or similar
+                technologies. Their use of information is governed by
+                the respective third party's privacy policies.
+              </p>
+            </section>
+
+            <section
+              id="control"
+              className="cookie-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
+              <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
+                MANAGING COOKIES
+              </p>
+
+              <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
+                You can control cookies through your browser.
               </h2>
 
               <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
                 <p>
-                  We may use the information we collect to respond to
-                  enquiries, provide requested services, arrange
-                  consultations, communicate with you, improve our
-                  website, and maintain the security of our services.
+                  Most modern browsers allow you to view, delete, block,
+                  or restrict cookies through their settings.
                 </p>
 
                 <p>
-                  We may also use information where necessary to comply
-                  with applicable legal or regulatory requirements.
+                  Disabling certain cookies may affect some website
+                  functionality or prevent specific features from
+                  working as intended.
                 </p>
               </div>
             </section>
 
             <section
-              id="sharing"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+              id="changes"
+              className="cookie-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                INFORMATION SHARING
+                POLICY CHANGES
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                We don't sell your personal information.
+                This policy may be updated.
               </h2>
 
-              <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
-                <p>
-                  We do not sell or rent your personal information to
-                  third parties.
-                </p>
-
-                <p>
-                  Information may be shared with trusted service
-                  providers or professional partners where reasonably
-                  necessary to operate our website, respond to your
-                  requests, provide services, or meet legal obligations.
-                </p>
-              </div>
-            </section>
-
-            <section
-              id="security"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
-            >
-              <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                DATA SECURITY
+              <p className="mt-7 text-[14px] leading-7 text-[#11110F]/60">
+                We may update this Cookie Policy from time to time to
+                reflect changes in our website, technologies, services,
+                or applicable requirements. Any updated version will be
+                posted on this page.
               </p>
-
-              <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                Protecting the information you trust us with.
-              </h2>
-
-              <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
-                <p>
-                  We take reasonable administrative, technical, and
-                  organizational measures to protect personal information
-                  from unauthorized access, misuse, alteration, or
-                  disclosure.
-                </p>
-
-                <p>
-                  However, no method of transmission or electronic
-                  storage can be guaranteed to be completely secure.
-                </p>
-              </div>
-            </section>
-
-            <section
-              id="cookies"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
-            >
-              <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                COOKIES
-              </p>
-
-              <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                A better understanding of how the site is used.
-              </h2>
-
-              <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
-                <p>
-                  Our website may use cookies or similar technologies to
-                  support functionality, understand website usage, and
-                  improve the user experience.
-                </p>
-
-                <p>
-                  You can control or disable cookies through your browser
-                  settings. Some website functionality may be affected
-                  if cookies are disabled.
-                </p>
-              </div>
-            </section>
-
-            <section
-              id="rights"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
-            >
-              <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                YOUR RIGHTS
-              </p>
-
-              <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                You have control over your information.
-              </h2>
-
-              <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
-                <p>
-                  Depending on applicable law, you may have rights to
-                  access, correct, update, or request deletion of certain
-                  personal information held by us.
-                </p>
-
-                <p>
-                  To make a privacy-related request, please contact us
-                  using the details below.
-                </p>
-              </div>
             </section>
 
             <section
               id="contact"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+              className="cookie-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
                 CONTACT US
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                Questions about privacy?
+                Questions about cookies?
               </h2>
 
               <div className="mt-7 rounded-[24px] bg-[#EAF7EF] p-7 text-[14px] leading-7">

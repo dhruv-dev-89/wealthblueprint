@@ -1,10 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import gsap from "gsap";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function Terms() {
+  const sectionIds = [
+    "acceptance",
+    "website",
+    "information",
+    "financial",
+    "intellectual",
+    "third-party",
+    "liability",
+    "changes",
+    "contact",
+  ];
+
+  const [activeSection, setActiveSection] = useState("acceptance");
+
+  /* -----------------------------------------
+     HERO + CONTENT ANIMATION
+  ----------------------------------------- */
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".terms-hero-item", {
@@ -32,14 +49,76 @@ export default function Terms() {
     return () => ctx.revert();
   }, []);
 
+  /* -----------------------------------------
+     SCROLLSPY
+  ----------------------------------------- */
+  useEffect(() => {
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSections = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              a.boundingClientRect.top - b.boundingClientRect.top
+          );
+
+        if (visibleSections.length > 0) {
+          setActiveSection(visibleSections[0].target.id);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-18% 0px -65% 0px",
+        threshold: 0,
+      }
+    );
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  /* -----------------------------------------
+     SIDEBAR CLICK
+  ----------------------------------------- */
+  const handleSectionClick = (e, id) => {
+    e.preventDefault();
+
+    const section = document.getElementById(id);
+
+    if (!section) return;
+
+    setActiveSection(id);
+
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    window.history.replaceState(null, "", `#${id}`);
+  };
+
   return (
     <div className="min-h-screen bg-[#F7FBF8] text-[#11110F]">
       <Navbar />
 
-      {/* HERO */}
+      {/* =====================================================
+          HERO
+      ===================================================== */}
       <section className="px-6 pb-20 pt-12 sm:px-10 lg:px-16 lg:pb-28 lg:pt-16">
         <div className="mx-auto max-w-[1280px]">
           <div className="grid items-end gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+            {/* LEFT */}
             <div>
               <p className="terms-hero-item mb-8 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#3157C8]">
                 LEGAL
@@ -54,6 +133,7 @@ export default function Terms() {
               </h1>
             </div>
 
+            {/* RIGHT */}
             <div className="terms-hero-item border-t border-[#11110F]/10 pt-7">
               <p className="max-w-[430px] text-[15px] leading-7 text-[#11110F]/55">
                 These terms explain the rules and conditions that apply
@@ -68,63 +148,88 @@ export default function Terms() {
         </div>
       </section>
 
-      {/* CONTENT */}
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
       <section className="terms-content px-6 pb-24 sm:px-10 lg:px-16 lg:pb-32">
         <div className="mx-auto grid max-w-[1280px] gap-16 lg:grid-cols-[0.3fr_0.7fr] lg:gap-24">
 
-          {/* SIDEBAR */}
+          {/* =================================================
+              SIDEBAR
+          ================================================= */}
           <aside className="hidden lg:block">
             <div className="sticky top-28 border-t border-[#11110F]/10 pt-5">
+
               <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-[#3157C8]">
                 ON THIS PAGE
               </p>
 
-              <nav className="mt-6 space-y-3 text-[12px] text-[#11110F]/45">
-                <a href="#acceptance" className="block hover:text-[#123B2A]">
-                  Acceptance
-                </a>
+              <nav className="mt-6 space-y-1">
+                {[
+                  ["acceptance", "Acceptance"],
+                  ["website", "Website Use"],
+                  ["information", "Information"],
+                  ["financial", "Financial Information"],
+                  ["intellectual", "Intellectual Property"],
+                  ["third-party", "Third-Party Links"],
+                  ["liability", "Liability"],
+                  ["changes", "Changes"],
+                  ["contact", "Contact"],
+                ].map(([id, label]) => {
+                  const isActive = activeSection === id;
 
-                <a href="#website" className="block hover:text-[#123B2A]">
-                  Website Use
-                </a>
-
-                <a href="#information" className="block hover:text-[#123B2A]">
-                  Information
-                </a>
-
-                <a href="#financial" className="block hover:text-[#123B2A]">
-                  Financial Information
-                </a>
-
-                <a href="#intellectual" className="block hover:text-[#123B2A]">
-                  Intellectual Property
-                </a>
-
-                <a href="#third-party" className="block hover:text-[#123B2A]">
-                  Third-Party Links
-                </a>
-
-                <a href="#liability" className="block hover:text-[#123B2A]">
-                  Liability
-                </a>
-
-                <a href="#changes" className="block hover:text-[#123B2A]">
-                  Changes
-                </a>
-
-                <a href="#contact" className="block hover:text-[#123B2A]">
-                  Contact
-                </a>
+                  return (
+                    <a
+                      key={id}
+                      href={`#${id}`}
+                      onClick={(e) =>
+                        handleSectionClick(e, id)
+                      }
+                      className={`
+                        relative flex min-h-[34px] items-center
+                        border-l-2 pl-4
+                        text-[12px]
+                        transition-all duration-300
+                        ${
+                          isActive
+                            ? "border-[#3157C8] font-semibold text-[#3157C8]"
+                            : "border-transparent text-[#11110F]/40 hover:text-[#11110F]/70"
+                        }
+                      `}
+                    >
+                      <span
+                        className={`
+                          transition-all duration-300
+                          ${
+                            isActive
+                              ? "translate-x-0"
+                              : "translate-x-0"
+                          }
+                        `}
+                      >
+                        {label}
+                      </span>
+                    </a>
+                  );
+                })}
               </nav>
             </div>
           </aside>
 
-          {/* MAIN */}
+          {/* =================================================
+              MAIN CONTENT
+          ================================================= */}
           <main className="max-w-[820px] space-y-14">
 
-            <section id="acceptance" className="terms-section">
+            {/* =================================================
+                ACCEPTANCE
+            ================================================= */}
+            <section
+              id="acceptance"
+              className="terms-section scroll-mt-32"
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                01 — ACCEPTANCE
+                ACCEPTANCE
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
@@ -138,9 +243,15 @@ export default function Terms() {
               </p>
             </section>
 
-            <section id="website" className="terms-section border-t border-[#11110F]/10 pt-14">
+            {/* =================================================
+                WEBSITE USE
+            ================================================= */}
+            <section
+              id="website"
+              className="terms-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                02 — WEBSITE USE
+                WEBSITE USE
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
@@ -162,9 +273,15 @@ export default function Terms() {
               </div>
             </section>
 
-            <section id="information" className="terms-section border-t border-[#11110F]/10 pt-14">
+            {/* =================================================
+                INFORMATION
+            ================================================= */}
+            <section
+              id="information"
+              className="terms-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                03 — INFORMATION ON THIS WEBSITE
+                INFORMATION
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
@@ -185,9 +302,15 @@ export default function Terms() {
               </div>
             </section>
 
-            <section id="financial" className="terms-section border-t border-[#11110F]/10 pt-14">
+            {/* =================================================
+                FINANCIAL INFORMATION
+            ================================================= */}
+            <section
+              id="financial"
+              className="terms-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                04 — FINANCIAL INFORMATION
+                FINANCIAL INFORMATION
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
@@ -215,9 +338,15 @@ export default function Terms() {
               </div>
             </section>
 
-            <section id="intellectual" className="terms-section border-t border-[#11110F]/10 pt-14">
+            {/* =================================================
+                INTELLECTUAL PROPERTY
+            ================================================= */}
+            <section
+              id="intellectual"
+              className="terms-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                05 — INTELLECTUAL PROPERTY
+                INTELLECTUAL PROPERTY
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
@@ -233,9 +362,15 @@ export default function Terms() {
               </p>
             </section>
 
-            <section id="third-party" className="terms-section border-t border-[#11110F]/10 pt-14">
+            {/* =================================================
+                THIRD PARTY
+            ================================================= */}
+            <section
+              id="third-party"
+              className="terms-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                06 — THIRD-PARTY LINKS
+                THIRD-PARTY LINKS
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
@@ -251,9 +386,15 @@ export default function Terms() {
               </p>
             </section>
 
-            <section id="liability" className="terms-section border-t border-[#11110F]/10 pt-14">
+            {/* =================================================
+                LIABILITY
+            ================================================= */}
+            <section
+              id="liability"
+              className="terms-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                07 — LIABILITY
+                LIABILITY
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
@@ -268,9 +409,15 @@ export default function Terms() {
               </p>
             </section>
 
-            <section id="changes" className="terms-section border-t border-[#11110F]/10 pt-14">
+            {/* =================================================
+                CHANGES
+            ================================================= */}
+            <section
+              id="changes"
+              className="terms-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                08 — CHANGES TO THESE TERMS
+                CHANGES
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
@@ -284,9 +431,15 @@ export default function Terms() {
               </p>
             </section>
 
-            <section id="contact" className="terms-section border-t border-[#11110F]/10 pt-14">
+            {/* =================================================
+                CONTACT
+            ================================================= */}
+            <section
+              id="contact"
+              className="terms-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                09 — CONTACT
+                CONTACT
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">

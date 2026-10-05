@@ -17,6 +17,10 @@ import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
+import CookiePolicy from "./pages/CookiePolicy";
+import Disclaimer from "./pages/Disclaimer";
+import Advisor from "./pages/Advisor";
+
 function App() {
   return (
     <BrowserRouter>
@@ -51,8 +55,11 @@ function App() {
         <Route path="/contact" element={<Contact />} />
 
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
         <Route path="/terms" element={<Terms />} />
+
+        <Route path="/advisor" element={<Advisor/>} />
 
       </Routes>
     </BrowserRouter>

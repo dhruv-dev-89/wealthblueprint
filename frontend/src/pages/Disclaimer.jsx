@@ -4,22 +4,22 @@ import gsap from "gsap";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-export default function PrivacyPolicy() {
+export default function Disclaimer() {
   const sectionIds = [
-    "information",
-    "usage",
-    "sharing",
-    "security",
-    "cookies",
-    "rights",
+    "general",
+    "investment",
+    "calculators",
+    "content",
+    "professional",
+    "third-party",
     "contact",
   ];
 
-  const [activeSection, setActiveSection] = useState("information");
+  const [activeSection, setActiveSection] = useState("general");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".privacy-hero-item", {
+      gsap.from(".disclaimer-hero-item", {
         y: 30,
         opacity: 0,
         duration: 0.8,
@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
         ease: "power3.out",
       });
 
-      gsap.from(".privacy-section", {
+      gsap.from(".disclaimer-section", {
         y: 25,
         opacity: 0,
         duration: 0.7,
@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
         delay: 0.15,
         ease: "power3.out",
         scrollTrigger: {
-          trigger: ".privacy-content",
+          trigger: ".disclaimer-content",
           start: "top 82%",
         },
       });
@@ -94,12 +94,12 @@ export default function PrivacyPolicy() {
   };
 
   const navigation = [
-    ["information", "Information We Collect"],
-    ["usage", "How We Use Information"],
-    ["sharing", "Information Sharing"],
-    ["security", "Data Security"],
-    ["cookies", "Cookies"],
-    ["rights", "Your Rights"],
+    ["general", "General Information"],
+    ["investment", "Investment Risk"],
+    ["calculators", "Calculators"],
+    ["content", "Website Content"],
+    ["professional", "Professional Advice"],
+    ["third-party", "Third-Party Information"],
     ["contact", "Contact Us"],
   ];
 
@@ -112,22 +112,24 @@ export default function PrivacyPolicy() {
         <div className="mx-auto max-w-[1280px]">
           <div className="grid items-end gap-12 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
-              <p className="privacy-hero-item mb-8 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#3157C8]">
+              <p className="disclaimer-hero-item mb-8 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#3157C8]">
                 LEGAL
               </p>
 
-              <h1 className="privacy-hero-item max-w-[900px] text-[clamp(4rem,8vw,8.5rem)] font-medium leading-[0.84] tracking-[-0.09em]">
-                Privacy
+              <h1 className="disclaimer-hero-item max-w-[900px] text-[clamp(4rem,8vw,8.5rem)] font-medium leading-[0.84] tracking-[-0.09em]">
+                Important
                 <br />
-                <span className="text-[#3157C8]">Policy.</span>
+                <span className="text-[#3157C8]">
+                  Disclaimer.
+                </span>
               </h1>
             </div>
 
-            <div className="privacy-hero-item border-t border-[#11110F]/10 pt-7">
+            <div className="disclaimer-hero-item border-t border-[#11110F]/10 pt-7">
               <p className="max-w-[430px] text-[15px] leading-7 text-[#11110F]/55">
-                Your privacy matters to us. This policy explains how
-                Wealth Blue Print collects, uses, and protects information
-                when you use our website and services.
+                Please read this information carefully before relying
+                on any content, tools, or information available through
+                the Wealth Blue Print website.
               </p>
 
               <p className="mt-6 text-[9px] font-semibold uppercase tracking-[0.22em] text-[#11110F]/30">
@@ -139,7 +141,7 @@ export default function PrivacyPolicy() {
       </section>
 
       {/* CONTENT */}
-      <section className="privacy-content px-6 pb-24 sm:px-10 lg:px-16 lg:pb-32">
+      <section className="disclaimer-content px-6 pb-24 sm:px-10 lg:px-16 lg:pb-32">
         <div className="mx-auto grid max-w-[1280px] gap-16 lg:grid-cols-[0.3fr_0.7fr] lg:gap-24">
 
           {/* SIDEBAR */}
@@ -182,183 +184,168 @@ export default function PrivacyPolicy() {
           <main className="max-w-[820px] space-y-14">
 
             <section
-              id="information"
-              className="privacy-section scroll-mt-32"
+              id="general"
+              className="disclaimer-section scroll-mt-32"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                INFORMATION WE COLLECT
+                GENERAL INFORMATION
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                Information you choose to share.
+                Information on this website is for general purposes.
               </h2>
 
               <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
                 <p>
-                  When you contact us, request information, book a
-                  consultation, or use our services, we may collect
-                  information that you voluntarily provide.
+                  The information provided on the Wealth Blue Print
+                  website is intended for general informational and
+                  educational purposes.
                 </p>
 
                 <p>
-                  This may include your name, email address, phone number,
-                  location, financial preferences, and other information
-                  necessary to respond to your enquiry or provide a
-                  requested service.
-                </p>
-
-                <p>
-                  We may also collect limited technical information such
-                  as browser type, device information, IP address, and
-                  website usage information.
+                  Website content should not be interpreted as a
+                  guarantee, recommendation, solicitation, or promise of
+                  any particular financial outcome.
                 </p>
               </div>
             </section>
 
             <section
-              id="usage"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+              id="investment"
+              className="disclaimer-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                HOW WE USE INFORMATION
+                INVESTMENT RISK
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                Information should have a purpose.
+                Investments involve risk.
               </h2>
 
               <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
                 <p>
-                  We may use the information we collect to respond to
-                  enquiries, provide requested services, arrange
-                  consultations, communicate with you, improve our
-                  website, and maintain the security of our services.
+                  Investment values can rise or fall, and returns are
+                  not guaranteed. Past performance is not indicative of
+                  future performance.
                 </p>
 
                 <p>
-                  We may also use information where necessary to comply
-                  with applicable legal or regulatory requirements.
+                  Different investment products carry different levels
+                  of risk. You should carefully consider your financial
+                  objectives, investment horizon, risk tolerance, and
+                  personal circumstances before making an investment
+                  decision.
                 </p>
               </div>
             </section>
 
             <section
-              id="sharing"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+              id="calculators"
+              className="disclaimer-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                INFORMATION SHARING
+                CALCULATORS & PROJECTIONS
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                We don't sell your personal information.
+                Calculations are indicative, not guaranteed.
+              </h2>
+
+              <p className="mt-7 text-[14px] leading-7 text-[#11110F]/60">
+                Calculators, projections, examples, and estimates
+                available on the website are based on the information
+                and assumptions entered by the user. They are intended
+                for illustrative purposes only and may not reflect
+                actual future results.
+              </p>
+            </section>
+
+            <section
+              id="content"
+              className="disclaimer-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+            >
+              <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
+                WEBSITE CONTENT
+              </p>
+
+              <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
+                We aim to keep information useful and current.
               </h2>
 
               <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
                 <p>
-                  We do not sell or rent your personal information to
-                  third parties.
+                  Reasonable efforts may be made to provide accurate and
+                  current information. However, financial regulations,
+                  products, market conditions, tax rules, and other
+                  information may change over time.
                 </p>
 
                 <p>
-                  Information may be shared with trusted service
-                  providers or professional partners where reasonably
-                  necessary to operate our website, respond to your
-                  requests, provide services, or meet legal obligations.
+                  Wealth Blue Print does not guarantee that all website
+                  content will always be complete, accurate, or current.
                 </p>
               </div>
             </section>
 
             <section
-              id="security"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+              id="professional"
+              className="disclaimer-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                DATA SECURITY
+                PROFESSIONAL ADVICE
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                Protecting the information you trust us with.
+                Your circumstances are unique.
               </h2>
 
               <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
                 <p>
-                  We take reasonable administrative, technical, and
-                  organizational measures to protect personal information
-                  from unauthorized access, misuse, alteration, or
-                  disclosure.
+                  Information available on this website should not be
+                  considered a substitute for personalized financial,
+                  investment, tax, legal, insurance, or other
+                  professional advice.
                 </p>
 
                 <p>
-                  However, no method of transmission or electronic
-                  storage can be guaranteed to be completely secure.
+                  Before making a financial decision, you should
+                  consider obtaining advice appropriate to your
+                  individual circumstances.
                 </p>
               </div>
             </section>
 
             <section
-              id="cookies"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+              id="third-party"
+              className="disclaimer-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                COOKIES
+                THIRD-PARTY INFORMATION
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                A better understanding of how the site is used.
+                External information may be outside our control.
               </h2>
 
-              <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
-                <p>
-                  Our website may use cookies or similar technologies to
-                  support functionality, understand website usage, and
-                  improve the user experience.
-                </p>
-
-                <p>
-                  You can control or disable cookies through your browser
-                  settings. Some website functionality may be affected
-                  if cookies are disabled.
-                </p>
-              </div>
-            </section>
-
-            <section
-              id="rights"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
-            >
-              <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
-                YOUR RIGHTS
+              <p className="mt-7 text-[14px] leading-7 text-[#11110F]/60">
+                The website may reference or link to information,
+                products, services, or websites operated by third
+                parties. Wealth Blue Print does not guarantee the
+                accuracy, availability, or completeness of third-party
+                information.
               </p>
-
-              <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                You have control over your information.
-              </h2>
-
-              <div className="mt-7 space-y-5 text-[14px] leading-7 text-[#11110F]/60">
-                <p>
-                  Depending on applicable law, you may have rights to
-                  access, correct, update, or request deletion of certain
-                  personal information held by us.
-                </p>
-
-                <p>
-                  To make a privacy-related request, please contact us
-                  using the details below.
-                </p>
-              </div>
             </section>
 
             <section
               id="contact"
-              className="privacy-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
+              className="disclaimer-section scroll-mt-32 border-t border-[#11110F]/10 pt-14"
             >
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#3157C8]">
                 CONTACT US
               </p>
 
               <h2 className="mt-5 text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.95] tracking-[-0.06em]">
-                Questions about privacy?
+                Need more information?
               </h2>
 
               <div className="mt-7 rounded-[24px] bg-[#EAF7EF] p-7 text-[14px] leading-7">

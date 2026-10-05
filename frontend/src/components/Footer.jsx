@@ -1,62 +1,78 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 
-const Footer = () => {
+export default function Footer() {
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    const items = footer.querySelectorAll(".footer-reveal");
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          items.forEach((item, index) => {
+            item.style.opacity = "1";
+            item.style.transform = "translateY(0)";
+            item.style.transitionDelay = `${index * 70}ms`;
+          });
+
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.12,
+      }
+    );
+
+    observer.observe(footer);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer id="site-footer" className="relative overflow-hidden bg-[#0B2A1D] text-white">
-      {/* Blueprint background */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.12]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.18) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.18) 1px, transparent 1px)
-            `,
-            backgroundSize: "70px 70px",
-          }}
-        />
+    <footer
+      ref={footerRef}
+      id="site-footer"
+      className="relative overflow-hidden bg-[#0B2A1D] text-white"
+    >
+      {/* Blueprint Grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.09]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.18) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
 
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)
-            `,
-            backgroundSize: "14px 14px",
-          }}
-        />
-      </div>
+      {/* Decorative circles */}
+      <div className="pointer-events-none absolute -right-24 top-24 h-[340px] w-[340px] rounded-full border border-white/[0.08]" />
 
-      {/* Decorative blueprint elements */}
-      <div className="pointer-events-none absolute -right-32 -top-32 h-[420px] w-[420px] rounded-full border border-white/10" />
-      <div className="pointer-events-none absolute -right-16 -top-16 h-[280px] w-[280px] rounded-full border border-white/[0.07]" />
+      <div className="pointer-events-none absolute -right-5 top-32 h-[230px] w-[230px] rounded-full border border-white/[0.06]" />
 
-      <div className="pointer-events-none absolute bottom-20 left-[42%] h-2 w-2 rounded-full bg-[#16A34A]" />
-      <div className="pointer-events-none absolute left-[58%] top-32 h-1.5 w-1.5 rounded-full bg-white/30" />
-      <div className="pointer-events-none absolute bottom-28 right-[18%] h-1.5 w-1.5 rounded-full bg-[#16A34A]/70" />
+      <div className="pointer-events-none absolute bottom-[-160px] left-[42%] h-[400px] w-[400px] rounded-full border border-white/[0.05]" />
 
-      {/* Main footer */}
-      <div className="relative z-10 mx-auto max-w-[1440px] px-6 py-14 sm:px-10 lg:px-16">
-        {/* Top brand label */}
-        <div className="mb-12 flex items-center gap-4">
-          <span className="h-px w-8 bg-[#16A34A]" />
+      <div className="relative mx-auto max-w-[1440px] px-6 py-20 sm:px-10 lg:px-16 lg:py-24">
+        {/* Small heading */}
+        <div className="footer-reveal flex items-center gap-4 opacity-0 translate-y-5">
+          <span className="h-px w-8 bg-[#4DBA68]" />
 
-          <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/55">
-            WealthBluePrint
+          <span className="text-[9px] font-semibold uppercase tracking-[0.32em] text-white/45">
+            WEALTHBLUEPRINT
           </span>
 
-          <span className="h-px w-8 bg-white/15" />
+          <span className="h-px w-8 bg-white/10" />
         </div>
 
-        {/* Footer grid */}
-        <div className="grid gap-12 lg:grid-cols-[1.5fr_0.8fr_0.8fr_1.2fr] lg:gap-16">
+        {/* Main footer grid */}
+        <div className="mt-12 grid gap-12 lg:grid-cols-[1.45fr_0.8fr_0.8fr_0.8fr] lg:gap-16">
           {/* Brand */}
-          <div>
-            {/* Logo */}
+          <div className="footer-reveal opacity-0 translate-y-5">
             <a
               href="/"
-              className="mb-6 inline-flex h-[60px] w-[120px] items-center justify-center overflow-hidden rounded-xl bg-[#F7FBF8]"
+              className="mb-6 inline-flex h-[58px] w-[175px] items-center justify-center overflow-hidden rounded-xl bg-[#F7FBF8]"
             >
               <img
                 src="/images/Logo.png"
@@ -65,206 +81,207 @@ const Footer = () => {
               />
             </a>
 
-            <p className="max-w-[350px] text-[14px] leading-7 text-white/55">
-              Thoughtful financial planning, practical investment guidance,
-              and long-term strategies designed around your goals.
+            <p className="max-w-[330px] text-[13px] leading-7 text-white/45">
+              Thoughtful financial planning, practical investment
+              guidance, and long-term strategies designed around your
+              goals.
             </p>
 
             <a
               href="mailto:contactus@wealthblueprint.in"
-              className="mt-5 inline-block text-[13px] font-medium text-white/75 transition-colors duration-300 hover:text-[#16A34A]"
+              className="mt-6 inline-block text-[12px] font-semibold text-white/70 transition hover:text-white"
             >
               contactus@wealthblueprint.in
             </a>
           </div>
 
           {/* Solutions */}
-          <div>
-            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">
-              Solutions
-            </h3>
+          <div className="footer-reveal opacity-0 translate-y-5">
+            <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#C8FF3D]">
+              SOLUTIONS
+            </p>
 
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="/investment-plans"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  Investment Planning
-                </a>
-              </li>
+            <div className="mt-6 space-y-4">
+              <a
+                href="/investment-plans"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Investment Planning
+              </a>
 
-              <li>
-                <a
-                  href="/mutual-funds"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  Mutual Funds
-                </a>
-              </li>
+              <a
+                href="/mutual-funds"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Mutual Funds
+              </a>
 
-              <li>
-                <a
-                  href="/sip"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  SIP
-                </a>
-              </li>
+              <a
+                href="/sip"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                SIP
+              </a>
 
-              <li>
-                <a
-                  href="/insurance"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  Insurance
-                </a>
-              </li>
+              <a
+                href="/insurance"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Insurance
+              </a>
 
-              <li>
-                <a
-                  href="/tax-planning"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  Tax Planning
-                </a>
-              </li>
-            </ul>
+              <a
+                href="/tax-planning"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Tax Planning
+              </a>
+            </div>
           </div>
 
           {/* Company */}
-          <div>
-            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">
-              Company
-            </h3>
+          <div className="footer-reveal opacity-0 translate-y-5">
+            <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#C8FF3D]">
+              COMPANY
+            </p>
 
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="/our-story"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  Our Story
-                </a>
-              </li>
+            <div className="mt-6 space-y-4">
+              <a
+                href="/our-story"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Our Story
+              </a>
 
-              <li>
-                <a
-                  href="/careers"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  Careers
-                </a>
-              </li>
+              <a
+                href="/careers"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Careers
+              </a>
 
-              <li>
-                <a
-                  href="/blogs"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  Insights
-                </a>
-              </li>
+              <a
+                href="/blogs"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Insights
+              </a>
 
-              <li>
-                <a
-                  href="/faqs"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  FAQs
-                </a>
-              </li>
+              <a
+                href="/faqs"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                FAQs
+              </a>
 
-              <li>
-                <a
-                  href="/contact"
-                  className="text-[14px] text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
+              <a
+                href="/contact"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Contact
+              </a>
+            </div>
           </div>
 
-          {/* Statement */}
-          <div className="lg:pl-6">
-            <div className="border-l border-white/10 pl-6">
-              <p className="max-w-[300px] text-[20px] font-medium leading-[1.45] tracking-[-0.02em] text-white/85">
-                Thoughtful planning today for a more confident tomorrow.
-              </p>
+          {/* Resources */}
+          <div className="footer-reveal opacity-0 translate-y-5">
+            <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#C8FF3D]">
+              RESOURCES
+            </p>
 
-              <div className="mt-7 flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#16A34A]/30 text-[#16A34A]">
-                  ↗
-                </span>
+            <div className="mt-6 space-y-4">
+              <a
+                href="/advisor"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Advisor
+              </a>
 
-                <a
-                  href="/contact"
-                  className="text-[13px] font-medium text-white/65 transition-colors duration-300 hover:text-white"
-                >
-                  Start a conversation
-                </a>
-              </div>
+              <a
+                href="/calculators"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Financial Calculators
+              </a>
+
+              <a
+                href="/faqs"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                FAQs
+              </a>
+
+              <a
+                href="/contact"
+                className="block text-[13px] text-white/55 transition hover:text-white"
+              >
+                Contact
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Bottom line */}
-        <div className="mt-14 border-t border-white/10 pt-6">
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-            {/* Copyright */}
-            <p className="text-[12px] text-white/35">
-              © {new Date().getFullYear()} WealthBluePrint. All rights reserved.
-            </p>
+        
+        {/* Bottom */}
+        <div className="footer-reveal mt-12 flex flex-col gap-5 border-t border-white/[0.08] pt-6 opacity-0 translate-y-5 lg:flex-row lg:items-center lg:justify-between">
+          <p className="text-[10px] text-white/35">
+            © 2026 WealthBluePrint. All rights reserved.
+          </p>
 
-            {/* Social */}
-            <div className="flex items-center gap-5">
-              <a
-                href="#"
-                aria-label="LinkedIn"
-                className="text-[12px] text-white/40 transition-colors duration-300 hover:text-white"
-              >
-                LinkedIn
-              </a>
+          <div className="flex flex-wrap gap-5 text-[10px] text-white/35">
+            <a
+              href="#"
+              className="transition hover:text-white"
+            >
+              LinkedIn
+            </a>
 
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="text-[12px] text-white/40 transition-colors duration-300 hover:text-white"
-              >
-                Instagram
-              </a>
+            <a
+              href="#"
+              className="transition hover:text-white"
+            >
+              Instagram
+            </a>
 
-              <a
-                href="#"
-                aria-label="Facebook"
-                className="text-[12px] text-white/40 transition-colors duration-300 hover:text-white"
-              >
-                Facebook
-              </a>
-            </div>
+            <a
+              href="#"
+              className="transition hover:text-white"
+            >
+              Facebook
+            </a>
+          </div>
 
-            {/* Legal */}
-            <div className="flex items-center gap-5">
-              <a
-                href="/privacy-policy"
-                className="text-[12px] text-white/35 transition-colors duration-300 hover:text-white"
-              >
-                Privacy
-              </a>
+          <div className="flex flex-wrap gap-5 text-[10px] text-white/35">
+            <a
+              href="/privacy-policy"
+              className="transition hover:text-white"
+            >
+              Privacy
+            </a>
 
-              <a
-                href="/terms"
-                className="text-[12px] text-white/35 transition-colors duration-300 hover:text-white"
-              >
-                Terms
-              </a>
-            </div>
+            <a
+              href="/cookie-policy"
+              className="transition hover:text-white"
+            >
+              Cookie Policy
+            </a>
+
+            <a
+              href="/disclaimer"
+              className="transition hover:text-white"
+            >
+              Disclaimer
+            </a>
+
+            <a
+              href="/terms"
+              className="transition hover:text-white"
+            >
+              Terms & Conditions
+            </a>
           </div>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

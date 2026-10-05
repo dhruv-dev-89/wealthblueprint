@@ -1,42 +1,89 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { Link } from "react-router-dom";
 
 const navItems = [
   {
     label: "Solutions",
     items: [
-      { label: "Investment Planning", href: "/investment-plans" },
-      { label: "Mutual Funds", href: "/mutual-funds" },
-      { label: "SIP", href: "/sip" },
-      { label: "Insurance", href: "/insurance" },
-      { label: "Tax Planning", href: "/tax-planning" },
+      {
+        label: "Investment Planning",
+        href: "/investment-plans",
+      },
+      {
+        label: "Mutual Funds",
+        href: "/mutual-funds",
+      },
+      {
+        label: "SIP",
+        href: "/sip",
+      },
+      {
+        label: "Insurance",
+        href: "/insurance",
+      },
+      {
+        label: "Tax Planning",
+        href: "/tax-planning",
+      },
     ],
   },
+
   {
     label: "Planning",
     items: [
-      { label: "Financial Planning", href: "/financial-planning" },
-      { label: "Retirement Planning", href: "/retirement-planning" },
-      { label: "Child Planning", href: "/child-planning" },
-      { label: "Education Planning", href: "/education-planning" },
+      {
+        label: "Financial Planning",
+        href: "/financial-planning",
+      },
+      {
+        label: "Retirement Planning",
+        href: "/retirement-planning",
+      },
+      {
+        label: "Child Planning",
+        href: "/child-planning",
+      },
+      {
+        label: "Education Planning",
+        href: "/education-planning",
+      },
     ],
   },
+
   {
     label: "Insights",
     items: [
-      { label: "Blogs", href: "/blogs" },
-      { label: "Calculators", href: "/calculators" },
-      { label: "FAQs", href: "/faqs" },
+      {
+        label: "Blogs",
+        href: "/blogs",
+      },
+      {
+        label: "Calculators",
+        href: "/calculators",
+      },
+      {
+        label: "FAQs",
+        href: "/faqs",
+      },
     ],
   },
   {
-    label: "About",
-    items: [
-      { label: "Our Story", href: "/our-story" },
-      { label: "Careers", href: "/careers" },
-    ],
-  },
+  label: "About",
+  items: [
+    {
+      label: "Our Story",
+      href: "/our-story",
+    },
+    {
+      label: "Advisor",
+      href: "/advisor",
+    },
+    {
+      label: "Careers",
+      href: "/careers",
+    },
+  ],
+},
 ];
 
 const Navbar = () => {
@@ -46,6 +93,10 @@ const Navbar = () => {
 
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // ==========================================
+  // SCROLL / FOOTER EFFECT
+  // ==========================================
 
   useEffect(() => {
     const nav = navRef.current;
@@ -65,10 +116,6 @@ const Navbar = () => {
         rotateX: 0,
         scale: 1,
       });
-
-      // ==========================================
-      // SCROLL 3D EFFECT
-      // ==========================================
 
       const handleScroll = () => {
         const scrollY = window.scrollY;
@@ -113,7 +160,7 @@ const Navbar = () => {
       handleScroll();
 
       // ==========================================
-      // HIDE NAVBAR WHEN FOOTER APPEARS
+      // HIDE NAV WHEN FOOTER APPEARS
       // ==========================================
 
       const footer =
@@ -126,7 +173,6 @@ const Navbar = () => {
           new IntersectionObserver(
             ([entry]) => {
               if (entry.isIntersecting) {
-                // Footer visible
                 gsap.to(nav, {
                   y: -120,
                   opacity: 0,
@@ -138,7 +184,6 @@ const Navbar = () => {
                 setOpenMenu(null);
                 setMobileOpen(false);
               } else {
-                // Footer not visible
                 gsap.to(nav, {
                   y: 0,
                   opacity: 1,
@@ -197,11 +242,19 @@ const Navbar = () => {
     };
   }, []);
 
+  // ==========================================
+  // TOGGLE DROPDOWN
+  // ==========================================
+
   const toggleMenu = (label) => {
     setOpenMenu((current) =>
       current === label ? null : label
     );
   };
+
+  // ==========================================
+  // RENDER
+  // ==========================================
 
   return (
     <>
@@ -226,6 +279,7 @@ const Navbar = () => {
           perspective: "1400px",
         }}
       >
+
         {/* ==========================================
             SOFT SHADOW
         =========================================== */}
@@ -277,8 +331,9 @@ const Navbar = () => {
             transformOrigin: "center top",
           }}
         >
+
           {/* ==========================================
-              BIGGER LOGO
+              LOGO
           =========================================== */}
 
           <a
@@ -312,7 +367,43 @@ const Navbar = () => {
           =========================================== */}
 
           <nav className="hidden items-center gap-1 lg:flex">
+
             {navItems.map((item) => {
+
+              // ------------------------------------------
+              // DIRECT LINK — ADVISOR
+              // ------------------------------------------
+
+              if (item.direct) {
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="
+                      flex
+                      h-[48px]
+                      items-center
+                      rounded-full
+                      px-5
+                      text-[13px]
+                      font-medium
+                      tracking-[-0.01em]
+                      text-[#17201B]/70
+                      transition-all
+                      duration-300
+                      hover:bg-white/75
+                      hover:text-[#123B2A]
+                    "
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
+
+              // ------------------------------------------
+              // DROPDOWN ITEM
+              // ------------------------------------------
+
               const isOpen =
                 openMenu === item.label;
 
@@ -327,6 +418,7 @@ const Navbar = () => {
                     setOpenMenu(null)
                   }
                 >
+
                   {/* NAV BUTTON */}
 
                   <button
@@ -390,15 +482,13 @@ const Navbar = () => {
                     </svg>
                   </button>
 
-                  {/* ======================================
-                      DROPDOWN
-                  ======================================= */}
+                  {/* DROPDOWN */}
 
                   <div
                     className={`
                       absolute
                       left-1/2
-                      top-[50px]
+                      top-[56px]
                       w-[250px]
                       -translate-x-1/2
                       origin-top
@@ -479,14 +569,15 @@ const Navbar = () => {
                 </div>
               );
             })}
+
           </nav>
 
           {/* ==========================================
               LET'S TALK
           =========================================== */}
 
-          <Link
-            to="/contact"
+          <a
+            href="/contact"
             className="
               hidden
               h-[48px]
@@ -512,10 +603,10 @@ const Navbar = () => {
             <span className="text-[14px]">
               ↗
             </span>
-          </Link>
+          </a>
 
           {/* ==========================================
-              MOBILE MENU BUTTON
+              MOBILE BUTTON
           =========================================== */}
 
           <button
@@ -538,6 +629,7 @@ const Navbar = () => {
             "
           >
             <div className="flex w-[18px] flex-col gap-[5px]">
+
               <span
                 className={`
                   h-[1.5px]
@@ -582,8 +674,10 @@ const Navbar = () => {
                   }
                 `}
               />
+
             </div>
           </button>
+
         </div>
 
         {/* ==========================================
@@ -609,7 +703,7 @@ const Navbar = () => {
             ${
               mobileOpen
                 ? `
-                  max-h-[700px]
+                  max-h-[750px]
                   translate-y-0
                   opacity-100
                 `
@@ -622,8 +716,47 @@ const Navbar = () => {
             }
           `}
         >
+
           <div className="p-3">
+
             {navItems.map((item) => {
+
+              // ==========================================
+              // MOBILE DIRECT LINK — ADVISOR
+              // ==========================================
+
+              if (item.direct) {
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() =>
+                      setMobileOpen(false)
+                    }
+                    className="
+                      flex
+                      items-center
+                      justify-between
+                      border-b
+                      border-[#DCE8DF]
+                      px-4
+                      py-4
+                      text-[14px]
+                      font-medium
+                      text-[#123B2A]
+                    "
+                  >
+                    <span>
+                      Advisor
+                    </span>
+
+                    <span>
+                      ↗
+                    </span>
+                  </a>
+                );
+              }
+
               const isOpen =
                 openMenu === item.label;
 
@@ -636,6 +769,7 @@ const Navbar = () => {
                     last:border-0
                   "
                 >
+
                   <button
                     type="button"
                     onClick={() =>
@@ -701,12 +835,17 @@ const Navbar = () => {
                     `}
                   >
                     <div className="overflow-hidden">
+
                       <div className="pb-3 pl-4 pr-2">
+
                         {item.items.map(
                           (subItem) => (
                             <a
                               key={subItem.label}
                               href={subItem.href}
+                              onClick={() =>
+                                setMobileOpen(false)
+                              }
                               className="
                                 flex
                                 items-center
@@ -722,13 +861,18 @@ const Navbar = () => {
                             >
                               {subItem.label}
 
-                              <span>↗</span>
+                              <span>
+                                ↗
+                              </span>
                             </a>
                           )
                         )}
+
                       </div>
+
                     </div>
                   </div>
+
                 </div>
               );
             })}
@@ -737,6 +881,9 @@ const Navbar = () => {
 
             <a
               href="/contact"
+              onClick={() =>
+                setMobileOpen(false)
+              }
               className="
                 mt-3
                 flex
@@ -752,15 +899,17 @@ const Navbar = () => {
             >
               Let's Talk ↗
             </a>
+
           </div>
         </div>
       </header>
 
       {/* =====================================================
-          3D GLASS CSS
+          GLASS / NAV CSS
       ====================================================== */}
 
       <style>{`
+
         .nav-inner {
           isolation: isolate;
         }
@@ -825,6 +974,7 @@ const Navbar = () => {
             transform: none !important;
           }
         }
+
       `}</style>
     </>
   );
