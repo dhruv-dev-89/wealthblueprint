@@ -1,461 +1,41 @@
-import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import LiquidChrome from "./LiquidChrome";
 
 export default function Hero() {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-
-    let width = 0;
-    let height = 0;
-    let dpr = 1;
-
-    let particles = [];
-
-    const mouse = {
-      x: 0,
-      y: 0,
-      active: false,
-    };
-
-    const config = {
-      particleCount: 750,
-      baseSpeed: 0.35,
-      acceleration: 0.018,
-      maxDepth: 1000,
-      centerPull: 0.0015,
-    };
-
-    const createParticle = () => {
-      const angle =
-        Math.random() * Math.PI * 2;
-
-      const radius =
-        Math.random() *
-        Math.min(width, height) *
-        0.58;
-
-      return {
-        angle,
-        radius,
-        depth:
-          Math.random() * config.maxDepth,
-
-        speed:
-          0.5 +
-          Math.random() * 1.4,
-
-        size:
-          Math.random() * 1.15 + 0.25,
-
-        alpha:
-          Math.random() * 0.7 + 0.15,
-
-        hue:
-          Math.random() < 0.72
-            ? "lime"
-            : "white",
-      };
-    };
-
-    const resetParticle = (particle) => {
-      particle.angle =
-        Math.random() * Math.PI * 2;
-
-      particle.radius =
-        Math.random() *
-        Math.min(width, height) *
-        0.58;
-
-      particle.depth =
-        config.maxDepth;
-
-      particle.speed =
-        0.5 +
-        Math.random() * 1.4;
-
-      particle.size =
-        Math.random() * 1.15 + 0.25;
-
-      particle.alpha =
-        Math.random() * 0.7 + 0.15;
-
-      particle.hue =
-        Math.random() < 0.72
-          ? "lime"
-          : "white";
-    };
-
-    const resize = () => {
-      const rect =
-        canvas.parentElement.getBoundingClientRect();
-
-      dpr = Math.min(
-        window.devicePixelRatio || 1,
-        2
-      );
-
-      width = rect.width;
-      height = rect.height;
-
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-
-      ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-      );
-
-      particles = Array.from(
-        { length: config.particleCount },
-        createParticle
-      );
-    };
-
-    const handleMouseMove = (event) => {
-      const rect =
-        canvas.getBoundingClientRect();
-
-      mouse.x =
-        event.clientX - rect.left;
-
-      mouse.y =
-        event.clientY - rect.top;
-
-      mouse.active = true;
-    };
-
-    const handleMouseLeave = () => {
-      mouse.active = false;
-    };
-
-    const draw = () => {
-      ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-      );
-
-      const centerX =
-        width / 2;
-
-      const centerY =
-        height / 2;
-
-      /*
-       * Very subtle center glow
-       */
-
-      const glow =
-        ctx.createRadialGradient(
-          centerX,
-          centerY,
-          0,
-          centerX,
-          centerY,
-          Math.min(width, height) * 0.55
-        );
-
-      glow.addColorStop(
-        0,
-        "rgba(200,255,61,0.045)"
-      );
-
-      glow.addColorStop(
-        0.45,
-        "rgba(18,59,42,0.02)"
-      );
-
-      glow.addColorStop(
-        1,
-        "rgba(5,18,13,0)"
-      );
-
-      ctx.fillStyle = glow;
-
-      ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-      );
-
-      particles.forEach((particle) => {
-        /*
-         * Move particles toward viewer.
-         */
-
-        particle.depth -=
-          config.baseSpeed *
-          particle.speed;
-
-        /*
-         * Reset when particle gets
-         * too close.
-         */
-
-        if (particle.depth < 1) {
-          resetParticle(particle);
-        }
-
-        /*
-         * Perspective projection.
-         */
-
-        const perspective =
-          700 / particle.depth;
-
-        let x =
-          centerX +
-          Math.cos(particle.angle) *
-            particle.radius *
-            perspective;
-
-        let y =
-          centerY +
-          Math.sin(particle.angle) *
-            particle.radius *
-            perspective;
-
-        /*
-         * Mouse interaction.
-         */
-
-        if (mouse.active) {
-          const dx =
-            x - mouse.x;
-
-          const dy =
-            y - mouse.y;
-
-          const distance =
-            Math.sqrt(
-              dx * dx +
-                dy * dy
-            );
-
-          if (distance < 220) {
-            const force =
-              (220 - distance) /
-              220;
-
-            x +=
-              (dx / (distance || 1)) *
-              force *
-              7;
-
-            y +=
-              (dy / (distance || 1)) *
-              force *
-              7;
-          }
-        }
-
-        /*
-         * Previous position for
-         * radial streak.
-         */
-
-        const previousDepth =
-          particle.depth +
-          9 * particle.speed;
-
-        const previousPerspective =
-          700 / previousDepth;
-
-        const previousX =
-          centerX +
-          Math.cos(particle.angle) *
-            particle.radius *
-            previousPerspective;
-
-        const previousY =
-          centerY +
-          Math.sin(particle.angle) *
-            particle.radius *
-            previousPerspective;
-
-        /*
-         * Fade based on depth.
-         */
-
-        const depthProgress =
-          1 -
-          particle.depth /
-            config.maxDepth;
-
-        const alpha =
-          particle.alpha *
-          Math.min(
-            depthProgress * 1.5,
-            1
-          );
-
-        /*
-         * Longer streaks farther
-         * from center.
-         */
-
-        const streak =
-          1 +
-          depthProgress * 3.5;
-
-        const endX =
-          x +
-          (x - previousX) *
-            streak;
-
-        const endY =
-          y +
-          (y - previousY) *
-            streak;
-
-        /*
-         * Particle color.
-         */
-
-        if (particle.hue === "lime") {
-          ctx.strokeStyle = `rgba(
-            200,
-            255,
-            61,
-            ${alpha}
-          )`;
-        } else {
-          ctx.strokeStyle = `rgba(
-            235,
-            244,
-            238,
-            ${alpha * 0.65}
-          )`;
-        }
-
-        ctx.lineWidth =
-          particle.size *
-          (0.5 + depthProgress);
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-          previousX,
-          previousY
-        );
-
-        ctx.lineTo(
-          endX,
-          endY
-        );
-
-        ctx.stroke();
-
-        /*
-         * Tiny particle core.
-         */
-
-        if (depthProgress > 0.5) {
-          ctx.fillStyle =
-            particle.hue === "lime"
-              ? `rgba(200,255,61,${alpha})`
-              : `rgba(255,255,255,${alpha * 0.7})`;
-
-          ctx.beginPath();
-
-          ctx.arc(
-            x,
-            y,
-            particle.size *
-              (0.7 + depthProgress),
-            0,
-            Math.PI * 2
-          );
-
-          ctx.fill();
-        }
-      });
-
-      animationRef.current =
-        requestAnimationFrame(draw);
-    };
-
-    resize();
-    draw();
-
-    window.addEventListener(
-      "resize",
-      resize
-    );
-
-    canvas.addEventListener(
-      "mousemove",
-      handleMouseMove
-    );
-
-    canvas.addEventListener(
-      "mouseleave",
-      handleMouseLeave
-    );
-
-    return () => {
-      cancelAnimationFrame(
-        animationRef.current
-      );
-
-      window.removeEventListener(
-        "resize",
-        resize
-      );
-
-      canvas.removeEventListener(
-        "mousemove",
-        handleMouseMove
-      );
-
-      canvas.removeEventListener(
-        "mouseleave",
-        handleMouseLeave
-      );
-    };
-  }, []);
-
   return (
     <section
       className="
         relative
         min-h-[calc(100vh-72px)]
         overflow-hidden
-        bg-[#07140E]
-        text-white
+        bg-[#7C3AED]
       "
     >
       {/* =====================================================
-          GLITTER WARP CANVAS
+          LIQUID CHROME
       ===================================================== */}
 
-      <canvas
-        ref={canvasRef}
+      <div
         className="
           absolute
           inset-0
-          h-full
-          w-full
+          z-0
         "
-      />
+      >
+        <LiquidChrome
+          baseColor={[
+            0.48627450980392156,
+            0.22745098039215686,
+            0.9294117647058824,
+          ]}
+          speed={0.3}
+          amplitude={0.3}
+          interactive
+        />
+      </div>
 
       {/* =====================================================
-          DARK VIGNETTE
+          SOFT OVERLAY
       ===================================================== */}
 
       <div
@@ -463,24 +43,8 @@ export default function Hero() {
           pointer-events-none
           absolute
           inset-0
-          bg-[radial-gradient(circle_at_center,transparent_15%,rgba(7,20,14,0.18)_52%,rgba(7,20,14,0.72)_100%)]
-        "
-      />
-
-      {/* =====================================================
-          TOP NAV SEPARATOR
-      ===================================================== */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-0
-          right-0
-          top-0
-          z-10
-          h-px
-          bg-white/10
+          z-[1]
+          bg-black/[0.04]
         "
       />
 
@@ -491,7 +55,7 @@ export default function Hero() {
       <div
         className="
           relative
-          z-20
+          z-10
           mx-auto
           flex
           min-h-[calc(100vh-72px)]
@@ -502,10 +66,9 @@ export default function Hero() {
           lg:px-14
         "
       >
-
-        {/* =================================================
+        {/* ===================================================
             TOP META
-        ================================================= */}
+        =================================================== */}
 
         <div
           className="
@@ -513,11 +76,10 @@ export default function Hero() {
             items-center
             justify-between
             border-b
-            border-white/10
+            border-white/20
             py-5
           "
         >
-
           <div
             className="
               flex
@@ -530,8 +92,7 @@ export default function Hero() {
                 h-[7px]
                 w-[7px]
                 rounded-full
-                bg-[#DDE9DF]
-                shadow-[0_0_14px_rgba(200,255,61,0.7)]
+                bg-white
               "
             />
 
@@ -541,7 +102,7 @@ export default function Hero() {
                 font-semibold
                 uppercase
                 tracking-[0.32em]
-                text-white/60
+                text-white/80
               "
             >
               WEALTHBLUEPRINT
@@ -557,7 +118,7 @@ export default function Hero() {
               font-medium
               uppercase
               tracking-[0.25em]
-              text-white/35
+              text-white/60
               sm:flex
             "
           >
@@ -572,17 +133,16 @@ export default function Hero() {
               font-medium
               uppercase
               tracking-[0.25em]
-              text-white/30
+              text-white/55
             "
           >
             01 / 06
           </span>
-
         </div>
 
-        {/* =================================================
+        {/* ===================================================
             MAIN HERO
-        ================================================= */}
+        =================================================== */}
 
         <div
           className="
@@ -596,7 +156,6 @@ export default function Hero() {
             lg:py-16
           "
         >
-
           {/* Eyebrow */}
 
           <div
@@ -606,12 +165,11 @@ export default function Hero() {
               gap-3
             "
           >
-
             <span
               className="
                 h-px
                 w-10
-                bg-[#DDE9DF]/50
+                bg-white/50
               "
             />
 
@@ -621,7 +179,7 @@ export default function Hero() {
                 font-medium
                 uppercase
                 tracking-[0.34em]
-                text-[#DDE9DF]
+                text-white/80
               "
             >
               PLAN · INVEST · GROW
@@ -631,10 +189,9 @@ export default function Hero() {
               className="
                 h-px
                 w-10
-                bg-[#DDE9DF]/50
+                bg-white/50
               "
             />
-
           </div>
 
           {/* Heading */}
@@ -652,7 +209,7 @@ export default function Hero() {
             <span
               className="
                 block
-                text-[#F4F1E9]
+                text-white
               "
             >
               Build wealth.
@@ -662,7 +219,7 @@ export default function Hero() {
               className="
                 mt-2
                 block
-                text-[#DDE9DF]
+                text-white/85
               "
             >
               With intention.
@@ -677,7 +234,7 @@ export default function Hero() {
               max-w-[570px]
               text-[14px]
               leading-7
-              text-white/50
+              text-white/70
               sm:text-[15px]
             "
           >
@@ -686,7 +243,9 @@ export default function Hero() {
             to the future you want.
           </p>
 
-          {/* CTA */}
+          {/* =================================================
+              CTA
+          ================================================= */}
 
           <div
             className="
@@ -698,7 +257,6 @@ export default function Hero() {
               sm:flex-row
             "
           >
-
             <Link
               to="/contact"
               className="
@@ -708,19 +266,18 @@ export default function Hero() {
                 items-center
                 gap-5
                 rounded-full
-                bg-[#DDE9DF]
+                bg-white
                 px-7
                 text-[11px]
                 font-semibold
-                text-[#07140E]
-                shadow-[0_0_35px_rgba(200,255,61,0.08)]
+                text-[#171514]
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:shadow-[0_0_45px_rgba(200,255,61,0.18)]
+                hover:bg-white/90
+                hover:shadow-[0_15px_40px_rgba(0,0,0,0.18)]
               "
             >
-
               <span>
                 Start Your Blueprint
               </span>
@@ -733,7 +290,7 @@ export default function Hero() {
                   items-center
                   justify-center
                   rounded-full
-                  bg-[#07140E]
+                  bg-[#171514]
                   text-white
                   transition-transform
                   duration-300
@@ -742,7 +299,6 @@ export default function Hero() {
               >
                 ↗
               </span>
-
             </Link>
 
             <a
@@ -754,10 +310,12 @@ export default function Hero() {
                 gap-3
                 text-[11px]
                 font-medium
-                text-white/70
+                text-white/80
               "
             >
-              Explore solutions
+              <span>
+                Explore solutions
+              </span>
 
               <span
                 className="
@@ -769,14 +327,12 @@ export default function Hero() {
                 →
               </span>
             </a>
-
           </div>
-
         </div>
 
-        {/* =================================================
+        {/* ===================================================
             BOTTOM META
-        ================================================= */}
+        =================================================== */}
 
         <div
           className="
@@ -784,11 +340,10 @@ export default function Hero() {
             items-center
             justify-between
             border-t
-            border-white/10
+            border-white/20
             py-5
           "
         >
-
           <div
             className="
               flex
@@ -802,7 +357,7 @@ export default function Hero() {
                 font-medium
                 uppercase
                 tracking-[0.28em]
-                text-white/30
+                text-white/55
               "
             >
               MONEY
@@ -812,7 +367,7 @@ export default function Hero() {
               className="
                 h-px
                 w-6
-                bg-white/15
+                bg-white/25
               "
             />
 
@@ -822,7 +377,7 @@ export default function Hero() {
                 font-medium
                 uppercase
                 tracking-[0.28em]
-                text-white/30
+                text-white/55
               "
             >
               PURPOSE
@@ -832,7 +387,7 @@ export default function Hero() {
               className="
                 h-px
                 w-6
-                bg-white/15
+                bg-white/25
               "
             />
 
@@ -842,7 +397,7 @@ export default function Hero() {
                 font-medium
                 uppercase
                 tracking-[0.28em]
-                text-white/30
+                text-white/55
               "
             >
               FUTURE
@@ -856,15 +411,13 @@ export default function Hero() {
               font-medium
               uppercase
               tracking-[0.25em]
-              text-white/25
+              text-white/45
               sm:block
             "
           >
             MOVE WITH PURPOSE
           </span>
-
         </div>
-
       </div>
     </section>
   );
