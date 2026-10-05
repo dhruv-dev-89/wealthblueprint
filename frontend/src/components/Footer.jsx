@@ -230,21 +230,21 @@ export default function Footer() {
 
           <div className="flex flex-wrap gap-5 text-[10px] text-white/35">
             <a
-              href="#"
+              href="https://www.linkedin.com/company/wealth-blue-print/"
               className="transition hover:text-white"
             >
               LinkedIn
             </a>
 
             <a
-              href="#"
+              href="https://www.instagram.com/wealth_blue_print_01/?utm_source=ig_web_button_share_sheet"
               className="transition hover:text-white"
             >
               Instagram
             </a>
 
             <a
-              href="#"
+              href="https://www.facebook.com/share/1CacM2v2c7/"
               className="transition hover:text-white"
             >
               Facebook
