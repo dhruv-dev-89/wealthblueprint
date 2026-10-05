@@ -20,6 +20,10 @@ import Terms from "./pages/Terms";
 import CookiePolicy from "./pages/CookiePolicy";
 import Disclaimer from "./pages/Disclaimer";
 import Advisor from "./pages/Advisor";
+import RenewPolicy from "./pages/RenewPolicy";
+import CheckStatus from "./pages/CheckStatus";
+import FileClaim from "./pages/FileClaim";
+import TrackClaim from "./pages/TrackClaim";
 
 function App() {
   return (
@@ -60,6 +64,11 @@ function App() {
         <Route path="/terms" element={<Terms />} />
 
         <Route path="/advisor" element={<Advisor/>} />
+
+        <Route path="/renew-policy" element={<RenewPolicy />} />
+        <Route path="/check-status" element={<CheckStatus />} />
+        <Route path="/file-claim" element={<FileClaim />} />
+        <Route path="/track-claim" element={<TrackClaim />} />
 
       </Routes>
     </BrowserRouter>

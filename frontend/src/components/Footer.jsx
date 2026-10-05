@@ -72,12 +72,12 @@ export default function Footer() {
           <div className="footer-reveal opacity-0 translate-y-5">
             <a
               href="/"
-              className="mb-6 inline-flex h-[58px] w-[175px] items-center justify-center overflow-hidden rounded-xl bg-[#F7FBF8]"
+              className="mb-6 inline-flex h-[108px] w-[175px] items-center justify-center overflow-hidden rounded-xl bg-[#F7FBF8]"
             >
               <img
                 src="/images/Logo.png"
                 alt="WealthBluePrint"
-                className="h-[76px] w-auto max-w-none scale-[1.65] object-contain"
+                className="h-[96px] w-auto max-w-none scale-[1.65] object-contain"
               />
             </a>
 
@@ -230,6 +230,7 @@ export default function Footer() {
 
           <div className="flex flex-wrap gap-5 text-[10px] text-white/35">
             <a
+              target="_blank"
               href="https://www.linkedin.com/company/wealth-blue-print/"
               className="transition hover:text-white"
             >
@@ -237,6 +238,7 @@ export default function Footer() {
             </a>
 
             <a
+              target="_blank"
               href="https://www.instagram.com/wealth_blue_print_01/?utm_source=ig_web_button_share_sheet"
               className="transition hover:text-white"
             >
@@ -244,6 +246,7 @@ export default function Footer() {
             </a>
 
             <a
+              target="_blank"
               href="https://www.facebook.com/share/1CacM2v2c7/"
               className="transition hover:text-white"
             >
